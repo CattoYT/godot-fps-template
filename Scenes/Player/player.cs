@@ -2,21 +2,26 @@ using Godot;
 using System;
 
 public partial class player : CharacterBody3D {
-    [Export] public int Speed { get; set; } = 14;
+    [Export] public int Speed { get; set; } = 5;
     [Export] public float JUMPVELOCITY { get; set; } = 4.5F;
+
+    [Export] public float MouseSensitivity { get; set; } = 1200;
 
 
     float gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
 
-
+    private Camera3D Camera;
     private Vector3 _targetVelocity = Vector3.Zero;
+    private Vector3 Rotation = Vector3.Zero;
+
+
 
     // from the source file, velocity = _targetVelocity
-    
-    
+
+
     public override void _Ready() {
         var gunRay = GetNode<RayCast3D>("Head/Camera3d/RayCast3D");
-        var Camera = GetNode<Camera3D>("Head/Camera3d");
+        Camera = GetNode<Camera3D>("Head/Camera3d");
 
         gunRay.AddException(this);
 
@@ -24,11 +29,11 @@ public partial class player : CharacterBody3D {
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-    {
+    public override void _Process(double delta) {
+    
     }
-    
-    
+
+
 
     public override void _PhysicsProcess(double delta) {
         if (!IsOnFloor()) {
@@ -47,14 +52,14 @@ public partial class player : CharacterBody3D {
         var direction = (Transform.Basis * new Vector3(inputDirection.X, 0, inputDirection.Y)).Normalized();
         if (direction != Vector3.Zero) {
             _targetVelocity.X = direction.X * Speed;
-            _targetVelocity.Y = direction.Y * Speed;
+            _targetVelocity.Z = direction.Z * Speed;
         }
         else {
             //unsure of this being necessary
             // source: line 37 and 38 in https://github.com/Shidoengie/FPS-template-gd4/blob/main/Scenes/Player/player.gd
-            _targetVelocity = _targetVelocity.MoveToward(_targetVelocity, (float)delta);
+            _targetVelocity = Vector3.Zero;
         }
-
+        Velocity = _targetVelocity;
         MoveAndSlide();
 
 
@@ -62,4 +67,13 @@ public partial class player : CharacterBody3D {
 
 
     }
+
+    // public override void _Input(InputEvent @event) {
+    //     if (@event is InputEventMouseMotion MMEvent) {
+    //         // unrelated, but c# syntax is really nice, i didnt have to google this one
+    //         Rotation.Y -= MMEvent.Relative.X / MouseSensitivity;
+    //         //Camera.Rotation.X = MMEvent.Relative.Y / MouseSensitivity;
+    //
+    //     }
+    // }
 }
