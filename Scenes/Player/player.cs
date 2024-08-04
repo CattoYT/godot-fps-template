@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using static Godot.Mathf; 
 
 public partial class player : CharacterBody3D {

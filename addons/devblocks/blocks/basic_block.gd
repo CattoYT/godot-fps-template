@@ -23,12 +23,6 @@ const _devblock_color_to_foldername := [
 		block_color_group = value
 		_update_mesh()
 
-enum ELEMENTAL_STATE{
-	NONE,
-	FIRE,
-	WATER
-}
-
 enum DEVBLOCK_STYLE {
 	DEFAULT,
 	CROSS,
