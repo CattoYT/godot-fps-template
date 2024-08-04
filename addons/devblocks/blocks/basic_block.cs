@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+using static Godot.Mathf;
 public enum DEVBLOCK_COLOR_GROUP {DARK, GREEN, LIGHT, ORANGE, PURPLE, RED}
 // _devblock_color_to_foldername will be aquired from .ToLower ig
     
@@ -23,7 +24,7 @@ public enum DEVBLOCK_STYLE {
 public partial class BasicBlock : StaticBody3D {
     
     [Signal]
-    public delegate void TransformChanged();
+    public delegate void TransformChangedEventHandler();
     
     const String TextureDirectory = "res://addons/devblocks/textures/";
     
@@ -58,12 +59,12 @@ public partial class BasicBlock : StaticBody3D {
         _UpdateMesh();
         _UpdateUvs();
         _mesh.SetNotifyLocalTransform(true);
-        Connect(nameof(TransformChanged), new Callable(this, nameof(_UpdateUvs)));
+        Connect(nameof(TransformChangedEventHandler), new Callable(this, nameof(_UpdateUvs)));
     }
 
     private void _notification(int reason) {
         if (reason == NotificationTransformChanged) {
-            EmitSignal(nameof(TransformChanged));
+            EmitSignal(nameof(TransformChangedEventHandler));
         }
             
     }
@@ -79,12 +80,53 @@ public partial class BasicBlock : StaticBody3D {
             return;
         }
 
-        //int TextureI = BlockStyleSetter + 1;
+        int TextureI = (int)BlockStyle + 1; //line from gpt because I had no idea you could cast enums to ints lol
+        string textureString;
+        if (TextureI < 10) {
+            textureString = "0";
+        }
+        else {
+            textureString = "";
+        }
+        textureString += TextureI.ToString();
+        string texturePath = TextureDirectory + 
+                             BlockStyle.ToString().ToLower() + "/" + 
+                             "texture_" + 
+                             textureString + 
+                             ".png";
+        
+        Resource Texture = GD.Load(texturePath);
+        if (Texture == null) {
+            return; // might want to error this actually, may change
+        }
+        
+        _mesh.GetSurfaceOverrideMaterial(0).Set("albedo_texture", Texture);
+
     }
-    
 
 
-    private void _UpdateUvs() { }
 
+
+
+    private void _UpdateUvs() {
+        Material material = _mesh.GetSurfaceOverrideMaterial(0);
+        Vector3 offset = Vector3.Zero;
+        Vector3 scale = Vector3.One;
+        for (int i = 0; i == 3; i++) {
+            bool diffOffset1 = Mathf.Abs(scale[i] % 2.0) >=0.99;
+            bool diffOffset2 = Mathf.Abs(scale[i] % 1.0) >=0.49;
+            
+            // I don't know how to do funky 1 liners in c# sooooooo
+            if (diffOffset1) offset[i] = 0.5F;
+            else offset[i] = 1F;
+            //do these all suffice as funky 1 liners, past me?
+            if (diffOffset2) offset[i] -= 0.25F;
+            
+
+        }
+        material.Set("uv1_scale", scale); // fix later
+        material.Set("uv1_offset", offset);
+    }
+        
 
 }

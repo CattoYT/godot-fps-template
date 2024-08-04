@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctahsvj88g1om"]
+[gd_scene load_steps=10 format=3 uid="uid://ctahsvj88g1om"]
 
 [ext_resource type="PackedScene" uid="uid://7gv6q50fuutj" path="res://Scenes/Player/player.tscn" id="1_eisjc"]
 [ext_resource type="PackedScene" uid="uid://dj26sacnhty4r" path="res://addons/devblocks/blocks/basic_block.tscn" id="1_ujgwk"]
 [ext_resource type="Script" path="res://Scenes/Player/what.gd" id="3_l3nbj"]
 [ext_resource type="Texture2D" uid="uid://cgp4mvev1cbra" path="res://addons/devblocks/textures/purple/texture_01.png" id="3_m1rsk"]
+[ext_resource type="Script" path="res://addons/devblocks/blocks/basic_block.cs" id="4_orxj5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6g5uc"]
 
@@ -43,6 +44,7 @@ shadow_enabled = true
 
 [node name="BasicBlock3" parent="." instance=ExtResource("1_ujgwk")]
 transform = Transform3D(2, 0, 0, 0, 5, 0, 0, 0, 30, 12.0086, 2.95161, -0.0307474)
+script = ExtResource("4_orxj5")
 
 [node name="BasicBlock" parent="." instance=ExtResource("1_ujgwk")]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -0.0335171, 0)

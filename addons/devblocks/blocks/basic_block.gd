@@ -86,3 +86,5 @@ func _update_uvs() -> void:
 		offset[i] = (0.5 if different_offset else 1) - (0.25 if different_offset2 else 0.0)
 	mat.set("uv1_scale", scale)
 	mat.set("uv1_offset", offset)
+	print(name)
+	print(scale)
