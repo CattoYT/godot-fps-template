@@ -1,27 +1,27 @@
 ﻿using System;
 using Godot;
 using static Godot.Mathf;
-public enum DEVBLOCK_COLOR_GROUP {DARK, GREEN, LIGHT, ORANGE, PURPLE, RED}
+
+
+public partial class BasicBlock : StaticBody3D {
+    public enum DEVBLOCK_COLOR_GROUP {DARK, GREEN, LIGHT, ORANGE, PURPLE, RED}
 // _devblock_color_to_foldername will be aquired from .ToLower ig
     
-public enum DEVBLOCK_STYLE {
-    DEFAULT,
-    CROSS,
-    CONTRAST,
-    DIAGONAL,
-    DIAGONAL_FADED,
-    GROUPED_CROSS,
-    GROUPED_CHECKERS,
-    CHECKERS,
-    CROSS_CHECKERS,
-    STAIRS,
-    DOOR,
-    WINDOW,
-    INFO
-}
-
-[Tool]
-public partial class BasicBlock : StaticBody3D {
+    public enum DEVBLOCK_STYLE {
+        DEFAULT,
+        CROSS,
+        CONTRAST,
+        DIAGONAL,
+        DIAGONAL_FADED,
+        GROUPED_CROSS,
+        GROUPED_CHECKERS,
+        CHECKERS,
+        CROSS_CHECKERS,
+        STAIRS,
+        DOOR,
+        WINDOW,
+        INFO
+    }
     
     [Signal]
     public delegate void TransformChangedEventHandler();
@@ -53,6 +53,7 @@ public partial class BasicBlock : StaticBody3D {
     private MeshInstance3D _mesh;
 
     public override void _Ready() {
+        GD.Print("A");
         _mesh = GetNode<MeshInstance3D>("Mesh");
         
         _mesh.SetSurfaceOverrideMaterial(0, (Material)GD.Load("res://addons/devblocks/blocks/block_material.tres").Duplicate(true));
@@ -111,10 +112,11 @@ public partial class BasicBlock : StaticBody3D {
     private void _UpdateUvs() {
         Material material = _mesh.GetSurfaceOverrideMaterial(0);
         Vector3 offset = Vector3.Zero;
-        Vector3 scale = Vector3.One;
+        Vector3 scale = new Vector3(Scale.X, Scale.Y, Scale.Z);
+        GD.Print("PLEASE");
         for (int i = 0; i == 3; i++) {
-            bool diffOffset1 = Mathf.Abs(scale[i] % 2.0) >=0.99;
-            bool diffOffset2 = Mathf.Abs(scale[i] % 1.0) >=0.49;
+            bool diffOffset1 = Scale[i] % 2.0 >=0.99;
+            bool diffOffset2 = Scale[i] % 1.0 >=0.49;
             
             // I don't know how to do funky 1 liners in c# sooooooo
             if (diffOffset1) offset[i] = 0.5F;
@@ -124,8 +126,8 @@ public partial class BasicBlock : StaticBody3D {
             
 
         }
-        material.Set("uv1_scale", scale); // fix later
-        material.Set("uv1_offset", offset);
+        GetNode<MeshInstance3D>("Mesh").GetSurfaceOverrideMaterial(0).Set("uv2_triplanar", true); //not working
+        GetNode<MeshInstance3D>("Mesh").MaterialOverride.Set("uv1_offset", offset); // not working
     }
         
 

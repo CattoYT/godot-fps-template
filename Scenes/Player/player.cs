@@ -83,7 +83,7 @@ public partial class player : CharacterBody3D {
             Rotation.X -= MMEvent.Relative.Y / MouseSensitivity;
             Rotation.X = Clamp(Rotation.X, DegToRad(-90), DegToRad(90));
             Camera.Rotation = Rotation;
-            playerMesh.Rotation = new Vector3(Rotation.X, 0, 0);
+            playerMesh.Rotation = new Vector3(0, Rotation.Y, 0);
             
     
         }

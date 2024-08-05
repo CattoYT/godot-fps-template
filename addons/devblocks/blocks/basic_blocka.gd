@@ -1,6 +1,6 @@
 @tool
 extends StaticBody3D
-class_name BasicBlock
+class_name BasicBlockA
 
 
 signal transform_changed
@@ -84,7 +84,7 @@ func _update_uvs() -> void:
 		var different_offset := fmod(scale[i], 2.0) >= 0.99
 		var different_offset2 := fmod(scale[i], 1.0) >= 0.49
 		offset[i] = (0.5 if different_offset else 1) - (0.25 if different_offset2 else 0.0)
+		
 	mat.set("uv1_scale", scale)
 	mat.set("uv1_offset", offset)
-	print(name)
-	print(scale)
+
