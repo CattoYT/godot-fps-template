@@ -2,8 +2,8 @@
 using Godot;
 using static Godot.Mathf;
 
-
-public partial class BasicBlock : StaticBody3D {
+[Tool]
+public partial class basic_block : StaticBody3D { //Reminder to self to make sure the class name matches so i don't go insane again
     public enum DEVBLOCK_COLOR_GROUP {DARK, GREEN, LIGHT, ORANGE, PURPLE, RED}
 // _devblock_color_to_foldername will be aquired from .ToLower ig
     
@@ -29,7 +29,7 @@ public partial class BasicBlock : StaticBody3D {
     const String TextureDirectory = "res://addons/devblocks/textures/";
     
 
-
+    // someone pls make a pr to fix these im 90% sure its bad practise
     [Export]
     public DEVBLOCK_COLOR_GROUP BlockColorSetter {
         get => BlockColor;
@@ -53,12 +53,13 @@ public partial class BasicBlock : StaticBody3D {
     private MeshInstance3D _mesh;
 
     public override void _Ready() {
-        GD.Print("A");
         _mesh = GetNode<MeshInstance3D>("Mesh");
         
-        _mesh.SetSurfaceOverrideMaterial(0, (Material)GD.Load("res://addons/devblocks/blocks/block_material.tres").Duplicate(true));
+        _mesh.SetSurfaceOverrideMaterial(0, (BaseMaterial3D)GD.Load("res://addons/devblocks/blocks/block_material.tres").Duplicate(true));
         _UpdateMesh();
         _UpdateUvs();
+        
+        
         _mesh.SetNotifyLocalTransform(true);
         Connect(nameof(TransformChangedEventHandler), new Callable(this, nameof(_UpdateUvs)));
     }
@@ -71,7 +72,7 @@ public partial class BasicBlock : StaticBody3D {
     }
     
 
-    private void _UpdateMesh() {
+    protected void _UpdateMesh() {
         if (_mesh == null) {
             return;
         }
@@ -91,10 +92,12 @@ public partial class BasicBlock : StaticBody3D {
         }
         textureString += TextureI.ToString();
         string texturePath = TextureDirectory + 
-                             BlockStyle.ToString().ToLower() + "/" + 
+                             BlockColor.ToString().ToLower() + "/" + 
                              "texture_" + 
                              textureString + 
                              ".png";
+        GD.Print(texturePath);
+
         
         Resource Texture = GD.Load(texturePath);
         if (Texture == null) {
@@ -109,11 +112,11 @@ public partial class BasicBlock : StaticBody3D {
 
 
 
-    private void _UpdateUvs() {
+    protected void _UpdateUvs() {
         Material material = _mesh.GetSurfaceOverrideMaterial(0);
         Vector3 offset = Vector3.Zero;
         Vector3 scale = new Vector3(Scale.X, Scale.Y, Scale.Z);
-        GD.Print("PLEASE");
+
         for (int i = 0; i == 3; i++) {
             bool diffOffset1 = Scale[i] % 2.0 >=0.99;
             bool diffOffset2 = Scale[i] % 1.0 >=0.49;
@@ -126,8 +129,9 @@ public partial class BasicBlock : StaticBody3D {
             
 
         }
-        GetNode<MeshInstance3D>("Mesh").GetSurfaceOverrideMaterial(0).Set("uv2_triplanar", true); //not working
-        GetNode<MeshInstance3D>("Mesh").MaterialOverride.Set("uv1_offset", offset); // not working
+        
+        material.Set("uv1_scale", scale);
+        material.Set("uv1_offset", offset);
     }
         
 
