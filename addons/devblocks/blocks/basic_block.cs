@@ -26,7 +26,7 @@ public partial class basic_block : StaticBody3D { //Reminder to self to make sur
     [Signal]
     public delegate void TransformChangedEventHandler();
     
-    const String TextureDirectory = "res://addons/devblocks/textures/";
+    protected const String TextureDirectory = "res://addons/devblocks/textures/";
     
 
     // someone pls make a pr to fix these im 90% sure its bad practise
@@ -38,7 +38,7 @@ public partial class basic_block : StaticBody3D { //Reminder to self to make sur
             _UpdateMesh();
         }
     }
-    private DEVBLOCK_COLOR_GROUP BlockColor = DEVBLOCK_COLOR_GROUP.DARK;
+    protected DEVBLOCK_COLOR_GROUP BlockColor = DEVBLOCK_COLOR_GROUP.DARK;
     
     [Export]
     public DEVBLOCK_STYLE BlockStyleSetter {
@@ -48,7 +48,7 @@ public partial class basic_block : StaticBody3D { //Reminder to self to make sur
             _UpdateMesh();
         }
     }
-    private DEVBLOCK_STYLE BlockStyle = DEVBLOCK_STYLE.DEFAULT;
+    protected DEVBLOCK_STYLE BlockStyle = DEVBLOCK_STYLE.DEFAULT;
 
     private MeshInstance3D _mesh;
 

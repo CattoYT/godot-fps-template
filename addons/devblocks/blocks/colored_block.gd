@@ -10,6 +10,7 @@ class_name ColoredBlock
 
 
 func _update_mesh() -> void:
+	print("AAa")
 	super._update_mesh()
 	if $Mesh.get_surface_override_material(0):
 		$Mesh.get_surface_override_material(0).set("albedo_color", block_color)
