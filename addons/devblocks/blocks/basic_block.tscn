@@ -7,6 +7,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_gblw7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pgixv"]
+albedo_color = Color(1, 0.141176, 1, 1)
 albedo_texture = ExtResource("2_xurbp")
 uv1_triplanar = true
 

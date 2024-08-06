@@ -6,8 +6,6 @@ using System;
 public partial class ColoredBlocka : StaticBody3D {
 // this literally didnt work with inheritance, so enjoy the copypaste
 
-    [Signal]
-    public delegate void TransformChangedEventHandler();
     
 
     // someone pls make a pr to fix these im 90% sure its bad practise
@@ -17,7 +15,7 @@ public partial class ColoredBlocka : StaticBody3D {
         set {
             BlockColor = value;
             _UpdateMesh();
-        }
+        } 
     }
     protected Color BlockColor = Colors.White;
 
@@ -31,26 +29,17 @@ public partial class ColoredBlocka : StaticBody3D {
         
         
         _mesh.SetNotifyLocalTransform(true);
-        Connect(nameof(TransformChangedEventHandler), new Callable(this, nameof(_UpdateMesh)));
     }
 
     private void _notification(int reason) {
         if (reason == NotificationTransformChanged) {
-            EmitSignal(nameof(TransformChangedEventHandler));
         }
             
     }
     
     //TODO: Live updating in the editor
     protected void _UpdateMesh() {
-        if (_mesh == null) {
-            return;
-        }
 
-        Material mat = _mesh.GetSurfaceOverrideMaterial(0);
-        if (mat == null) {
-            return;
-        }
         
         
         MeshInstance3D mesh = GetNode<MeshInstance3D>("Mesh");

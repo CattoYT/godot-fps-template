@@ -1,12 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://ctahsvj88g1om"]
+[gd_scene load_steps=14 format=3 uid="uid://ctahsvj88g1om"]
 
 [ext_resource type="PackedScene" uid="uid://7gv6q50fuutj" path="res://Scenes/Player/player.tscn" id="1_eisjc"]
 [ext_resource type="PackedScene" uid="uid://dj26sacnhty4r" path="res://addons/devblocks/blocks/basic_block.tscn" id="1_ujgwk"]
 [ext_resource type="Script" path="res://Scenes/Player/player.cs" id="3_btw2f"]
 [ext_resource type="Texture2D" uid="uid://cgp4mvev1cbra" path="res://addons/devblocks/textures/purple/texture_01.png" id="3_m1rsk"]
-[ext_resource type="Script" path="res://addons/devblocks/blocks/basic_blocka.cs" id="5_n7l4b"]
+[ext_resource type="Script" path="res://addons/devblocks/blocks/basic_block.cs" id="5_n7l4b"]
 [ext_resource type="Script" path="res://addons/devblocks/blocks/colored_block.gd" id="5_qtnga"]
 [ext_resource type="Script" path="res://addons/devblocks/blocks/ColoredBlocka.cs" id="6_3jbsm"]
+[ext_resource type="PackedScene" uid="uid://yupomeyi12x" path="res://addons/devblocks/blocks/emission_block.tscn" id="7_v3taq"]
+[ext_resource type="Script" path="res://addons/devblocks/blocks/emission_block.gd" id="8_r4do6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6g5uc"]
 
@@ -59,16 +61,22 @@ script = ExtResource("6_3jbsm")
 BlockColorSetter = Color(0, 0, 0, 0)
 
 [node name="BasicBlock6" parent="." instance=ExtResource("1_ujgwk")]
-transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, -0.976502, 1.57481, -3.43122)
+transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, -1.03378, 1.68834, -3.62855)
 script = ExtResource("5_qtnga")
-block_color = Color(0.298039, 0.321569, 0.298039, 1)
-block_color_group = 0
-block_style = 0
+block_color = Color(1, 0.141176, 1, 1)
 
 [node name="BasicBlock7" parent="." instance=ExtResource("1_ujgwk")]
 transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, 1.5558, 1.57481, -3.43122)
 script = ExtResource("6_3jbsm")
-BlockColorSetter = Color(0.68621, 0.500028, 0.255579, 1)
+BlockColorSetter = Color(0.492161, 0.5569, 0.545608, 1)
+
+[node name="EmissionBlock2" parent="." instance=ExtResource("7_v3taq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01406, 1.41142, -8.01081)
+script = ExtResource("8_r4do6")
+emission_energy = 1.0
+
+[node name="EmissionBlock" parent="." instance=ExtResource("7_v3taq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1067, 1.45257, -8.01987)
 
 [node name="CsgPolygon3d" type="CSGPolygon3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -9.06623, 0.523835, 0.0135)
