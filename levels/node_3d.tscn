@@ -61,12 +61,12 @@ script = ExtResource("6_3jbsm")
 BlockColorSetter = Color(0, 0, 0, 0)
 
 [node name="BasicBlock6" parent="." instance=ExtResource("1_ujgwk")]
-transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, -1.03378, 1.68834, -3.62855)
+transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, 6.5838, 1.68834, -8.27681)
 script = ExtResource("5_qtnga")
 block_color = Color(1, 0.141176, 1, 1)
 
 [node name="BasicBlock7" parent="." instance=ExtResource("1_ujgwk")]
-transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, 1.5558, 1.57481, -3.43122)
+transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, 5.86714, 1.57481, -3.43122)
 script = ExtResource("6_3jbsm")
 BlockColorSetter = Color(0.492161, 0.5569, 0.545608, 1)
 
